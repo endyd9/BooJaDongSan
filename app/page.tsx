@@ -65,7 +65,9 @@ export const getData = async () => {
       },
     },
   } = await axios.get(
-    `${process.env.REQUEST_URL}?serviceKey=${process.env.API_KEY}&pageNo=1&numOfRows=10&LAWD_CD=11110&DEAL_YMD=201512`
+    `${process.env.REQUEST_URL}?serviceKey=${
+      process.env.API_KEY
+    }&pageNo=${1}&numOfRows=${10}&LAWD_CD=${11110}&DEAL_YMD=${201512}`
   );
 
   return item;
