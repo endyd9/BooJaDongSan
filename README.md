@@ -4,14 +4,14 @@
 
 # ToDo
 
-## Page
+## Page 명세
 
 - 메인✅
 - 회원가입
 - 로그인
 
 
-## DB 
+## DB 명세
 
 ### User
 - id : number(auto)
