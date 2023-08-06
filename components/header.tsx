@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Header() {
@@ -25,7 +26,7 @@ export default function Header() {
       <div className="w-full flex justify-between">
         {/* 타이틀 */}
         <div className="flex items-center justify-end">
-          <h1 className="text-3xl font-light">부자동산</h1>
+          <h1 className="text-4xl font-thin">부자동산</h1>
         </div>
         {/* 메뉴 아이콘 */}
         <div
@@ -54,7 +55,7 @@ export default function Header() {
         className="fixed -right-96 top-0 w-64 h-full px-3 bg-black text-white hidden"
       >
         <div className="flex pt-5 items-center justify-between">
-          <span className="text-3xl">메뉴</span>
+          <span className="text-3xl font-extralight">Menu</span>
           <div onClick={closeMenu}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,10 +75,20 @@ export default function Header() {
         </div>
 
         <div>
-          <ul className="mt-5">
-            <li>미정메뉴</li>
-            <li>회원가입</li>
-            <li>로그인</li>
+          <ul className="mt-5 h-screen">
+            <Link href={"//"}>
+              <li className="text-lg font-extralight">Search</li>
+            </Link>
+            <div className="absolute w-full bottom-0">
+              <div className="py-5 mx-16 flex w-2/5 justify-between">
+                <Link href={"/join"}>
+                  <li className="text-lg font-extralight">Join</li>
+                </Link>
+                <Link href={"/login"}>
+                  <li className="text-lg font-extralight">Log-in</li>
+                </Link>
+              </div>
+            </div>
           </ul>
         </div>
       </div>
