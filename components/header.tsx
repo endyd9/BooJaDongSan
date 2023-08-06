@@ -1,21 +1,35 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 export default function Header() {
-  const onMenuClick = () => {
-    const menu = document.getElementById("menu");
-    alert(menu);
+  const [isMenu, setIsMenu] = useState(false);
+  const openMenu = () => {
+    const menu = document.getElementById("menu") as HTMLElement;
+    menu.classList.remove("hidden");
+    menu.style.transition = "0.6s";
+    setTimeout(() => {
+      menu.style.transform = `translate(-150%)`;
+    }, 1);
+  };
+  const closeMenu = () => {
+    const menu = document.getElementById("menu") as HTMLElement;
+    menu.style.transform = `translate(0%)`;
+    setTimeout(() => {
+      menu.classList.add("hidden");
+    }, 400);
   };
   return (
-    <header className="w-full py-6 px-5 flex flex-row justify-between border-b-2">
+    <header className="fixed bg-white w-full max-w-xl py-6 px-5 flex flex-row justify-between border-b-2">
       {/* 헤더내용 */}
       <div className="w-full flex justify-between">
         {/* 타이틀 */}
         <div className="flex items-center justify-end">
           <h1 className="text-3xl font-light">부자동산</h1>
         </div>
-        {/* 메뉴 */}
+        {/* 메뉴 아이콘 */}
         <div
-          onClick={() => onMenuClick()}
+          onClick={() => openMenu()}
           className="flex items-center justify-end hover:cursor-pointer"
         >
           <svg
@@ -35,13 +49,37 @@ export default function Header() {
         </div>
       </div>
       {/* 메뉴 */}
-      <div id="menu" className="absolute -right-96 top-0 w-96 h-full bg-black">
-        <ul className="text-white">
-          <span>메뉴</span>
-          <li>메뉴1</li>
-          <li>메뉴2</li>
-          <li>메뉴3</li>
-        </ul>
+      <div
+        id="menu"
+        className="fixed -right-96 top-0 w-64 h-full px-3 bg-black text-white hidden"
+      >
+        <div className="flex pt-5 items-center justify-between">
+          <span className="text-3xl">메뉴</span>
+          <div onClick={closeMenu}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-10 text-red-600"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div>
+          <ul className="mt-5">
+            <li>미정메뉴</li>
+            <li>회원가입</li>
+            <li>로그인</li>
+          </ul>
+        </div>
       </div>
     </header>
   );

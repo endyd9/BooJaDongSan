@@ -1,4 +1,4 @@
-export interface BoodongsnaTypes {
+export interface FullData {
   거래금액: number;
   거래유형?: number;
   년: number;
@@ -26,4 +26,9 @@ export interface BoodongsnaTypes {
   층: number;
   해제사유발생일?: number;
   해제여부?: number;
+}
+
+export interface ListData {
+  아파트: string;
+  거래금액: number;
 }
