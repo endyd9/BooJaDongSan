@@ -7,13 +7,14 @@
 ## Page 명세
 
 - 메인✅
-- 회원가입
-- 로그인
-
+- 회원가입✅
+- 로그인✅
+- 검색
 
 ## DB 명세
 
 ### User
+
 - id : number(auto)
 - createdAt : DateTime
 - updatedAt : DateTime
@@ -22,13 +23,15 @@
 - nickName : string
 
 ### Like
+
 - id : number(auto)
 - createdAt : DateTime
 - updatedAt : DateTime
 - user : User
 - Apt : Apt
-  
+
 ### Apt
+
 - id : number(auto)
 - name : string
 - dedicatedArea : number
@@ -41,5 +44,3 @@
 - roadName : string
 - buildingNumber : number
 - buildingMinorNumber : number
-
-

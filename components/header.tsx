@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export default function Header() {
-  const [isMenu, setIsMenu] = useState(false);
   const openMenu = () => {
     const menu = document.getElementById("menu") as HTMLElement;
     menu.classList.remove("hidden");
@@ -26,7 +24,9 @@ export default function Header() {
       <div className="w-full flex justify-between">
         {/* 타이틀 */}
         <div className="flex items-center justify-end">
-          <h1 className="text-4xl font-thin">부자동산</h1>
+          <Link onClick={closeMenu} href={"/"}>
+            <h1 className="text-4xl font-thin">부자동산</h1>
+          </Link>
         </div>
         {/* 메뉴 아이콘 */}
         <div
@@ -75,16 +75,16 @@ export default function Header() {
         </div>
 
         <div>
-          <ul className="mt-5 h-screen">
-            <Link href={"//"}>
+          <ul className="mt-5 pl-3 h-screen">
+            <Link onClick={closeMenu} href={"/search"}>
               <li className="text-lg font-extralight">Search</li>
             </Link>
             <div className="absolute w-full bottom-0">
               <div className="py-5 mx-16 flex w-2/5 justify-between">
-                <Link href={"/join"}>
+                <Link onClick={closeMenu} href={"/join"}>
                   <li className="text-lg font-extralight">Join</li>
                 </Link>
-                <Link href={"/login"}>
+                <Link onClick={closeMenu} href={"/login"}>
                   <li className="text-lg font-extralight">Log-in</li>
                 </Link>
               </div>
