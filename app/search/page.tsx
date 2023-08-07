@@ -1,5 +1,6 @@
 "use client";
 
+import List from "@/components/List";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -8,11 +9,17 @@ interface SearchForm {
 }
 
 export default function Search() {
-  const [placeholde, setPlaceholder] = useState("검색어를 입력하세요.");
+  const [placeholde, setPlaceholder] = useState("전체조건");
+  const [keyword, setKeyword] = useState("");
+  const [category, setCategory] = useState("전체");
+
   const { register, handleSubmit } = useForm<SearchForm>();
+
+  const data = [{ 아파트: "ㅁㄴㅇ", 거래금액: 111 }];
 
   const onSearch = (searchForm: SearchForm) => {
     if (searchForm.keyword === "") return alert("검색어를 입력하세요.");
+    setKeyword(searchForm.keyword);
     setPlaceholder(searchForm.keyword);
   };
 
@@ -22,8 +29,14 @@ export default function Search() {
     smenuList.forEach((smenu) => {
       smenu.classList.remove("bg-gray-400");
     });
+
+    if (event.target.innerText === category) {
+      return setPlaceholder("전체조건");
+    }
+
     event.target.classList.add("bg-gray-400");
-    setPlaceholder(`${event.target?.innerText}(으)로 검색하기`);
+    setCategory(event.target.innerText);
+    setPlaceholder(event.target.innerText);
   };
   return (
     <div className="h-screen pt-28">
@@ -33,7 +46,7 @@ export default function Search() {
       <div
         id="smenus"
         onClick={onSubmenuClick}
-        className="grid grid-rows-2 grid-cols-3 w-[80%] h-24 ml-10"
+        className="grid grid-rows-2 grid-cols-3 w-[80%] h-24 ml-10 hover:cursor-pointer"
       >
         <div className="flex items-center justify-center  border-2 border-gray-200">
           아파트 명
@@ -61,7 +74,7 @@ export default function Search() {
           className="border-2 w-[90%] h-10 pl-2 placeholder:font-mono"
           type="text"
           id="keyword"
-          placeholder={placeholde}
+          placeholder={`${placeholde}(으)로 검색하기`}
           {...register("keyword")}
         />
         <button className="flex items-center justify-center absolute right-[1.5rem] hover:bg-gray-200 w-10 h-10 rounded-full">
@@ -81,8 +94,8 @@ export default function Search() {
           </svg>
         </button>
       </form>
-      <div className="h-1/2 flex justify-center items-center">
-        <h1>검색결과자리</h1>
+      <div className="h-1/2 flex justify-center my-5 px-5">
+        <List itemList={data} />
       </div>
     </div>
   );

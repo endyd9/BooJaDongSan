@@ -11,7 +11,7 @@ export default function List({ itemList }: any) {
           <Link key={i} href={"/"}>
             <li className="w-full mb-3 flex items-center justify-between px-10 h-20 border-gray-500 border shadow-xl">
               <span>{e.아파트}</span>
-              <span>거래액: {e.거래금액}</span>
+              <span>거래금액: {e.거래금액} 억원</span>
             </li>
           </Link>
         ))}

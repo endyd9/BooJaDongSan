@@ -44,3 +44,4 @@
 - roadName : string
 - buildingNumber : number
 - buildingMinorNumber : number
+- view : number
