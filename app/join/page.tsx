@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { useForm } from "react-hook-form";
 
 interface JoinForm {
@@ -12,9 +13,18 @@ interface JoinForm {
 export default function Join() {
   const { register, handleSubmit } = useForm<JoinForm>();
 
-  const onSubmit = (joinForm: JoinForm) => {
-    //회원가입 요청 보낼 함수임
-    console.log(joinForm);
+  const onSubmit = async (joinForm: JoinForm) => {
+    const res = await (
+      await fetch("api/join", {
+        method: "post",
+        headers: {
+          "Content-Type": `application/json`,
+        },
+        body: JSON.stringify(joinForm),
+      })
+    ).json();
+
+    console.log(res);
   };
   return (
     <div className="h-screen flex flex-col items-center justify-center pb-10">

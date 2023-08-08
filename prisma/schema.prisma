@@ -1,9 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider     = "mysql"
-    url          = env("DB_URL")
-    relationMode = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  password  String
+  nickName  String
+  address   String?
+  Like      Like[]
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  apt       Apt      @relation(fields: [aptId], references: [id])
+  userId    Int
+  aptId     Int
+}
+
+model Apt {
+  id               Int    @id @default(autoincrement())
+  name             String
+  dedicatedArea    Int
+  floor            Int
+  buildYear        Int
+  treadDate        Int
+  treadAmount      Int
+  cityCode         Int
+  dong             String
+  roadName         String
+  buildingInt      Int
+  buildingMinorInt Int
+  view             Int
+  Like             Like[]
 }
