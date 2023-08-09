@@ -56,6 +56,7 @@ export default function Header() {
       >
         <div className="flex pt-5 items-center justify-between">
           <span className="text-3xl font-extralight">Menu</span>
+          {/* 메뉴닫기 아이콘 */}
           <div onClick={closeMenu}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +81,7 @@ export default function Header() {
               <li className="text-lg font-extralight">Search</li>
             </Link>
             <div className="absolute w-full bottom-0">
-              <div className="py-5 mx-16 flex w-2/5 justify-between">
+              <div className="py-5 ml-28 flex w-2/5 justify-between">
                 <Link onClick={closeMenu} href={"/join"}>
                   <li className="text-lg font-extralight">Join</li>
                 </Link>

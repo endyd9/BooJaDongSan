@@ -25,9 +25,9 @@ export default function Home() {
   ];
 
   return (
-    <div className="pt-28 flex min-h-screen flex-col items-center justify-between py-5">
+    <main className="pt-28 flex min-h-screen flex-col items-center justify-between py-5">
       <List itemList={더미데이터} />
-    </div>
+    </main>
   );
 }
 

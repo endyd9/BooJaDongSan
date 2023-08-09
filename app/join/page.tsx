@@ -1,7 +1,7 @@
 "use client";
 
-import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 interface JoinForm {
   email: string;
@@ -11,23 +11,40 @@ interface JoinForm {
 }
 
 export default function Join() {
-  const { register, handleSubmit } = useForm<JoinForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<JoinForm>();
+
+  const router = useRouter();
 
   const onSubmit = async (joinForm: JoinForm) => {
-    const res = await (
-      await fetch("api/join", {
-        method: "post",
-        headers: {
-          "Content-Type": `application/json`,
-        },
-        body: JSON.stringify(joinForm),
-      })
-    ).json();
+    try {
+      const res = await (
+        await fetch("api/join", {
+          method: "post",
+          headers: {
+            "Content-Type": `application/json`,
+          },
+          body: JSON.stringify(joinForm),
+        })
+      ).json();
 
-    console.log(res);
+      if (res.error === "이미 가입된 이메일 입니다.") {
+        alert(res.error);
+        return;
+      }
+      if (res.error === "가입에 실패했습니다. 잠시 후 다시 시도해 주세요.") {
+        alert(res.error);
+        return location.reload();
+      }
+      alert("가입되었습니다.");
+      return router.push("login");
+    } catch (error) {}
   };
   return (
-    <div className="h-screen flex flex-col items-center justify-center pb-10">
+    <main className="h-screen flex flex-col items-center justify-center pb-10">
       <h1 className="mx-10 text-3xl bg-white font-extralight">Join</h1>
       <hr className="mt-3 w-64 border-gray-400" />
       <p className=" before:content-['*'] before:text-blue-400 mt-3 text-sm font-bold">
@@ -35,7 +52,7 @@ export default function Join() {
       </p>
       <br />
 
-      <form className="grid" onSubmit={handleSubmit(onSubmit)}>
+      <form className="grid w-52" onSubmit={handleSubmit(onSubmit)}>
         <label
           className="after:content-['*'] after:text-blue-400"
           htmlFor="email"
@@ -46,9 +63,17 @@ export default function Join() {
           className="border border-gray-300"
           type="email"
           id="email"
-          {...register("email", { required: true })}
+          {...register("email", {
+            required: "이메일을 입력해 주세요",
+            pattern: {
+              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: "이메일 형식을 다시 확인해 주세요",
+            },
+          })}
         />
-        <br />
+        <span className="my-3 text-xs text-red-600">
+          {errors.email?.message}
+        </span>
         <label
           className="after:content-['*'] after:text-blue-400"
           htmlFor="pass"
@@ -59,9 +84,17 @@ export default function Join() {
           className="border border-gray-300"
           type="password"
           id="pass"
-          {...register("pass", { required: true })}
+          {...register("pass", {
+            required: "비밀번호를 입력해 주세요",
+            pattern: {
+              value: /(?=.*\d)(?=.*[a-z, A-Z]).{8,}/g,
+              message: "영문 대,소문자,숫자 를 포함한 8자리 이상으로 해주세요",
+            },
+          })}
         />
-        <br />
+        <span className="my-3 text-xs text-red-600">
+          {errors.pass?.message}
+        </span>
         <label
           className="after:content-['*'] after:text-blue-400"
           htmlFor="nick"
@@ -72,9 +105,11 @@ export default function Join() {
           className="border border-gray-300"
           type="text"
           id="nick"
-          {...register("nick", { required: true })}
+          {...register("nick", { required: "닉네임을 입력해 주세요" })}
         />
-        <br />
+        <span className="my-3 text-xs text-red-600">
+          {errors.nick?.message}
+        </span>
         <label htmlFor="addr">Address</label>
         <input
           className="border border-gray-300"
@@ -89,6 +124,6 @@ export default function Join() {
           value="Join"
         />
       </form>
-    </div>
+    </main>
   );
 }

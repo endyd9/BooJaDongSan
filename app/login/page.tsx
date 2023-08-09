@@ -14,7 +14,7 @@ export default function Login() {
     //로그인 요청 보낼 함수임
   };
   return (
-    <div className="h-screen flex flex-col items-center justify-center pb-10">
+    <main className="h-screen flex flex-col items-center justify-center pb-10">
       <h1 className="mx-10 text-3xl bg-white font-extralight">Login</h1>
       <hr className="mt-3 w-64 border-gray-400" />
       <br />
@@ -41,6 +41,6 @@ export default function Login() {
           value="Login"
         />
       </form>
-    </div>
+    </main>
   );
 }

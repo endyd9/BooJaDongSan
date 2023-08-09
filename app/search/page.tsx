@@ -39,7 +39,7 @@ export default function Search() {
     setPlaceholder(event.target.innerText);
   };
   return (
-    <div className="h-screen pt-28">
+    <main className="h-screen pt-28">
       <h1 className="text-3xl ml-5 font-extralight">Search</h1>
       <hr className="border-gray-300 mt-5 w-[95%] ml-3" />
       <br />
@@ -97,6 +97,6 @@ export default function Search() {
       <div className="h-1/2 flex justify-center my-5 px-5">
         <List itemList={data} />
       </div>
-    </div>
+    </main>
   );
 }
