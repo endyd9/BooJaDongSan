@@ -1,8 +1,12 @@
 "use client";
 
+import { getCookie } from "cookies-next";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const openMenu = () => {
     const menu = document.getElementById("menu") as HTMLElement;
     menu.classList.remove("hidden");
@@ -18,6 +22,9 @@ export default function Header() {
       menu.classList.add("hidden");
     }, 400);
   };
+  useEffect(() => {
+    setIsLoggedIn(Boolean(getCookie("x-jwt")));
+  }, [location]);
   return (
     <header className="fixed bg-white w-full max-w-xl py-6 px-5 flex flex-row justify-between border-b-2">
       {/* 헤더내용 */}
@@ -81,14 +88,22 @@ export default function Header() {
               <li className="text-lg font-extralight">Search</li>
             </Link>
             <div className="absolute w-full bottom-0">
-              <div className="py-5 ml-28 flex w-2/5 justify-between">
-                <Link onClick={closeMenu} href={"/join"}>
-                  <li className="text-lg font-extralight">Join</li>
-                </Link>
-                <Link onClick={closeMenu} href={"/login"}>
-                  <li className="text-lg font-extralight">Log-in</li>
-                </Link>
-              </div>
+              {isLoggedIn ? (
+                <div className="py-5 ml-28 flex w-2/5 justify-end">
+                  <Link onClick={closeMenu} href={"/join"}>
+                    <li className="text-lg font-extralight">My Page</li>
+                  </Link>
+                </div>
+              ) : (
+                <div className="py-5 ml-28 flex w-2/5 justify-between">
+                  <Link onClick={closeMenu} href={"/join"}>
+                    <li className="text-lg font-extralight">Join</li>
+                  </Link>
+                  <Link onClick={closeMenu} href={"/login"}>
+                    <li className="text-lg font-extralight">Log-in</li>
+                  </Link>
+                </div>
+              )}
             </div>
           </ul>
         </div>

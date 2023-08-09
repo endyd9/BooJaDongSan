@@ -1,5 +1,8 @@
 "use client";
 
+import axios from "axios";
+import { setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 interface LoginForm {
@@ -10,8 +13,24 @@ interface LoginForm {
 export default function Login() {
   const { register, handleSubmit } = useForm<LoginForm>();
 
-  const onSubmit = (loginForm: LoginForm) => {
-    //로그인 요청 보낼 함수임
+  const router = useRouter();
+
+  const onSubmit = async (loginForm: LoginForm) => {
+    try {
+      const { data } = await axios.post("/api/login", loginForm);
+
+      if (data.error === undefined) {
+        const { token } = data;
+        setCookie("x-jwt", token);
+      } else {
+        return alert(data.error);
+      }
+
+      return router.push("/");
+    } catch {
+      alert("로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+      return location.reload();
+    }
   };
   return (
     <main className="h-screen flex flex-col items-center justify-center pb-10">

@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface JoinForm {
   email: string;
@@ -21,27 +22,22 @@ export default function Join() {
 
   const onSubmit = async (joinForm: JoinForm) => {
     try {
-      const res = await (
-        await fetch("api/join", {
-          method: "post",
-          headers: {
-            "Content-Type": `application/json`,
-          },
-          body: JSON.stringify(joinForm),
-        })
-      ).json();
+      const { data } = await axios.post("/api/join", joinForm);
 
-      if (res.error === "이미 가입된 이메일 입니다.") {
-        alert(res.error);
+      if (data.error === "이미 가입된 이메일 입니다.") {
+        alert(data.error);
         return;
       }
-      if (res.error === "가입에 실패했습니다. 잠시 후 다시 시도해 주세요.") {
-        alert(res.error);
+      if (data.error === "가입에 실패했습니다. 잠시 후 다시 시도해 주세요.") {
+        alert(data.error);
         return location.reload();
       }
       alert("가입되었습니다.");
       return router.push("login");
-    } catch (error) {}
+    } catch (error) {
+      alert("가입에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+      return location.reload();
+    }
   };
   return (
     <main className="h-screen flex flex-col items-center justify-center pb-10">
