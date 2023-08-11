@@ -1,13 +1,16 @@
 "use client";
 
-import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import useSWR, { useSWRConfig } from "swr";
 
 export default function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data } = useSWR("/api/isLoggedIn");
+  const { mutate } = useSWRConfig();
+  const [isLoggedIn, setIsLoggedIn] = useState(data?.ok);
 
   const openMenu = () => {
+    mutate("/api/isLoggedIn");
     const menu = document.getElementById("menu") as HTMLElement;
     menu.classList.remove("hidden");
     menu.style.transition = "0.6s";
@@ -23,8 +26,8 @@ export default function Header() {
     }, 400);
   };
   useEffect(() => {
-    setIsLoggedIn(Boolean(getCookie("x-jwt")));
-  }, [location]);
+    setIsLoggedIn(data?.ok);
+  }, [data]);
   return (
     <header className="fixed bg-white w-full max-w-xl py-6 px-5 flex flex-row justify-between border-b-2">
       {/* 헤더내용 */}
@@ -89,10 +92,11 @@ export default function Header() {
             </Link>
             <div className="absolute w-full bottom-0">
               {isLoggedIn ? (
-                <div className="py-5 ml-28 flex w-2/5 justify-end">
+                <div className="py-5 ml-14 flex w-3/5 justify-between">
                   <Link onClick={closeMenu} href={"/join"}>
                     <li className="text-lg font-extralight">My Page</li>
                   </Link>
+                  <button className="text-lg font-extralight">Log-out</button>
                 </div>
               ) : (
                 <div className="py-5 ml-28 flex w-2/5 justify-between">
