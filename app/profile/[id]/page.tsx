@@ -21,7 +21,6 @@ export default function MyPage() {
   const { data } = useSWR<UserInfoResponse>("/api/profile");
   const { data: isLoggedIn } =
     useSWR<IsLoggedInUserResponse>("/api/is-logged-in");
-  console.log(data);
 
   useEffect(() => {
     setIsMy(data?.user?.id === isLoggedIn?.user?.id);
@@ -36,7 +35,7 @@ export default function MyPage() {
               {data?.user?.nickName} 님의 페이지
             </h1>
             {isMy ? (
-              <Link href={`/profile/${data?.user?.id}/edit`}>
+              <Link href={`/profile/edit`}>
                 <span className="text-xl text-gray-500 font-thin">
                   정보 수정
                 </span>
@@ -47,8 +46,8 @@ export default function MyPage() {
             <h1 className="my-3 text-xl">관심 매물</h1>
             <List
               itemList={[
-                { 아파트: "관심 아파트1", 가격: 1000 },
-                { 아파트: "관심 아파트2", 가격: 1000 },
+                { 아파트: "관심 아파트1", 거래금액: 1000 },
+                { 아파트: "관심 아파트2", 거래금액: 1000 },
               ]}
             />
           </div>

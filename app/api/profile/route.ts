@@ -5,8 +5,10 @@ export async function GET(req: Request) {
   const res = NextResponse;
 
   // 요청한 URL에서 id값 추출
-  const reg = new RegExp("http://localhost:3000/profile/");
-  const params: any = req.headers.get("referer")?.replace(reg, "");
+
+  const params: any = req.headers
+    .get("referer")
+    ?.replace("http://localhost:3000/profile/", "");
 
   try {
     const user = await client.user.findUnique({
@@ -19,6 +21,8 @@ export async function GET(req: Request) {
         nickName: true,
       },
     });
+
+    if (!user) throw new Error();
 
     return res.json({ ok: true, user });
   } catch {

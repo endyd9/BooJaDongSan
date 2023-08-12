@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-interface JoinForm {
+export interface UserInfoForm {
   email: string;
   pass: string;
   nick: string;
@@ -16,11 +16,11 @@ export default function Join() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<JoinForm>();
+  } = useForm<UserInfoForm>();
 
   const router = useRouter();
 
-  const onSubmit = async (joinForm: JoinForm) => {
+  const onSubmit = async (joinForm: UserInfoForm) => {
     try {
       const { data } = await axios.post("/api/join", joinForm);
 
