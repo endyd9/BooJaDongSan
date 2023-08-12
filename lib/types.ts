@@ -32,3 +32,10 @@ export interface ListData {
   아파트: string;
   거래금액: number;
 }
+
+export interface IsLoggedInUserResponse {
+  ok: boolean;
+  user: {
+    id: number;
+  };
+}

@@ -1,16 +1,20 @@
 "use client";
 
+import { IsLoggedInUserResponse } from "@/lib/types";
+import { deleteCookie } from "cookies-next";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 
 export default function Header() {
-  const { data } = useSWR("/api/isLoggedIn");
+  const { data } = useSWR<IsLoggedInUserResponse>("/api/is-logged-in");
   const { mutate } = useSWRConfig();
   const [isLoggedIn, setIsLoggedIn] = useState(data?.ok);
+  const router = useRouter();
 
   const openMenu = () => {
-    mutate("/api/isLoggedIn");
+    mutate("/api/is-logged-in");
     const menu = document.getElementById("menu") as HTMLElement;
     menu.classList.remove("hidden");
     menu.style.transition = "0.6s";
@@ -24,6 +28,12 @@ export default function Header() {
     setTimeout(() => {
       menu.classList.add("hidden");
     }, 400);
+  };
+  const logout = () => {
+    deleteCookie("x-jwt");
+    alert("로그아웃 되었습니다.");
+    closeMenu();
+    return router.push("/");
   };
   useEffect(() => {
     setIsLoggedIn(data?.ok);
@@ -93,10 +103,12 @@ export default function Header() {
             <div className="absolute w-full bottom-0">
               {isLoggedIn ? (
                 <div className="py-5 ml-14 flex w-3/5 justify-between">
-                  <Link onClick={closeMenu} href={"/join"}>
+                  <Link onClick={closeMenu} href={`/profile/${data?.user?.id}`}>
                     <li className="text-lg font-extralight">My Page</li>
                   </Link>
-                  <button className="text-lg font-extralight">Log-out</button>
+                  <button onClick={logout} className="text-lg font-extralight">
+                    Log-out
+                  </button>
                 </div>
               ) : (
                 <div className="py-5 ml-28 flex w-2/5 justify-between">

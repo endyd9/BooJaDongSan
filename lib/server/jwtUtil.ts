@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 export const sign = (id: string) => {
   return jwt.sign({ id }, process.env.JWT_SECRET!, {
     algorithm: "HS256",
-    expiresIn: "1h",
+    expiresIn: "24h",
   });
 };
 
