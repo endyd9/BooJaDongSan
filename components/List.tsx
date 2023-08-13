@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function List({ itemList }: any) {
   return (
-    <div className="w-full px-1">
+    <div className="mt-8 w-full px-1">
       <ul>
         {itemList?.map((e: ListData, i: number) => (
           <Link key={e.id} href={"/"}>
@@ -15,7 +15,7 @@ export default function List({ itemList }: any) {
                 <span>{e.dong}</span>
               </div>
               <div className="flex justify-end">
-                <span className="mr-2">거래금액:</span>
+                <span className="mr-1">거래금액:</span>
                 <span>
                   {e.treadAmount > 9999
                     ? e.treadAmount > 99999

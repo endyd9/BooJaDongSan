@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import client from "@/lib/server/client";
+import { client } from "@/lib/server/client";
 import { compare } from "@/lib/server/hashPassword";
 import { sign } from "@/lib/server/jwtUtil";
 

@@ -7,6 +7,10 @@ import useSWR from "swr";
 export default function Home() {
   const [selctor, setSelector] = useState(true);
   const { data } = useSWR(`/api?selector=${selctor ? "view" : "like"}`);
+  if (data?.ok === false) {
+    alert(data.error);
+    return location.reload();
+  }
 
   const onSelectorClicked: any = (event: React.ChangeEvent<HTMLElement>) => {
     switch (event.target.innerText) {
@@ -21,7 +25,7 @@ export default function Home() {
 
   return (
     <main className="pt-28 flex min-h-screen flex-col items-center justify-between py-5">
-      <nav className="text-xl mb-5">
+      <nav className="fixed top-20 h-14 w-full flex items-center justify-center text-xl bg-white">
         <button
           onClick={onSelectorClicked}
           className={selctor ? "" : "font-thin"}
@@ -39,31 +43,10 @@ export default function Home() {
       {data?.ok === true ? (
         <List itemList={data?.apts} />
       ) : (
-        <span className="absolute top-[50%]">{data?.error}</span>
+        <p className="absolute top-[50%] w-full text-center">
+          데이터 로드 실패
+        </p>
       )}
     </main>
   );
-}
-
-{
-  /* 
-    나중 참고용
-    <ul>
-        {isData ? (
-          data.map((e, i) => (
-            <li key={i}>
-              <p>아파트명 : {e.아파트}</p>
-              <p>
-                거래일자 : {e.년}년{e.월}
-                {e.일}
-              </p>
-              <p>거래금액 : {e.거래금액} </p>
-              <p>도로명주소 : {e.도로명}</p>
-              <br />
-            </li>
-          ))
-        ) : (
-          <h1>{data.toString()}</h1>
-        )}
-      </ul> */
 }

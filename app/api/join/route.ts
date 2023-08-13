@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import client from "@/lib/server/client";
+import { client } from "@/lib/server/client";
 import { hashing } from "@/lib/server/hashPassword";
 
 export async function POST(req: Request) {

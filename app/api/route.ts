@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
-import client from "@/lib/server/client";
+import { client } from "@/lib/server/client";
 
 export async function GET(req: Request) {
   const res = NextResponse;
 
   const { searchParams } = new URL(req.url);
   const selector = searchParams.get("selector");
-  console.log(selector);
 
   try {
     if (selector === "view") {
@@ -14,7 +13,7 @@ export async function GET(req: Request) {
         orderBy: {
           view: "desc",
         },
-        take: 10,
+        take: 20,
         select: {
           id: true,
           name: true,
@@ -33,7 +32,7 @@ export async function GET(req: Request) {
             _count: "desc",
           },
         },
-        take: 10,
+        take: 20,
         select: {
           id: true,
           name: true,
