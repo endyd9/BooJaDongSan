@@ -1,7 +1,7 @@
 "use client";
 
 import List from "@/components/List";
-import { IsLoggedInUserResponse } from "@/lib/types";
+import { IsLoggedInUserResponse, ListData } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
@@ -13,6 +13,7 @@ interface UserInfoResponse {
     email: string;
     nickName: string;
   };
+  like: [{ apt: ListData }];
   error?: string;
 }
 
@@ -22,8 +23,19 @@ export default function MyPage() {
   const { data: isLoggedIn } =
     useSWR<IsLoggedInUserResponse>("/api/is-logged-in");
 
+  const apts: any = [];
+  if (data?.ok === true) {
+    data?.like.forEach((apt) => {
+      const {
+        apt: { id, name, dong, treadAmount },
+      } = apt;
+
+      apts.push({ id, name, treadAmount, dong });
+    });
+  }
+
   useEffect(() => {
-    setIsMy(data?.user?.id === isLoggedIn?.user?.id);
+    setIsMy(data?.user?.id === isLoggedIn?.user?.id + "");
   }, [data]);
 
   return (
@@ -42,14 +54,13 @@ export default function MyPage() {
               </Link>
             ) : null}
           </div>
-          <div className="flex flex-col w-[90%]">
-            <h1 className="my-3 text-xl">관심 매물</h1>
-            <List
-              itemList={[
-                { 아파트: "관심 아파트1", 거래금액: 1000 },
-                { 아파트: "관심 아파트2", 거래금액: 1000 },
-              ]}
-            />
+          <div className="flex flex-col w-full px-3">
+            <h1 className="ml-3 text-xl ">관심 매물</h1>
+            {data?.like.length > 0 ? (
+              <List itemList={apts} />
+            ) : (
+              <p className="mt-28 text-center">등록된 관심매물이 없습니다.</p>
+            )}
           </div>
         </>
       ) : (

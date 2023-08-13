@@ -39,7 +39,7 @@ export default function Header() {
     setIsLoggedIn(data?.ok);
   }, [data]);
   return (
-    <header className="fixed bg-white w-full max-w-xl py-6 px-5 flex flex-row justify-between border-b-2">
+    <header className="z-10 fixed bg-white w-full max-w-xl py-6 px-5 flex flex-row justify-between border-b-2">
       {/* 헤더내용 */}
       <div className="w-full flex justify-between">
         {/* 타이틀 */}
@@ -74,7 +74,7 @@ export default function Header() {
         id="menu"
         className="fixed -right-96 top-0 w-64 h-full px-3 bg-black text-white hidden"
       >
-        <div className="flex pt-5 items-center justify-between">
+        <div className="z-10 flex pt-5 items-center justify-between">
           <span className="text-3xl font-extralight">Menu</span>
           {/* 메뉴닫기 아이콘 */}
           <div onClick={closeMenu}>

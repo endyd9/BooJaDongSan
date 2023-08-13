@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <main className="pt-28 flex min-h-screen flex-col items-center justify-between py-5">
-      <nav className="fixed top-20 h-14 w-full flex items-center justify-center text-xl bg-white">
+      <nav className="fixed top-[5.6rem] h-14 w-full flex items-center justify-center text-xl bg-white">
         <button
           onClick={onSelectorClicked}
           className={selctor ? "" : "font-thin"}

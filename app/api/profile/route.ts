@@ -6,14 +6,14 @@ export async function GET(req: Request) {
 
   // 요청한 URL에서 id값 추출
 
-  const params: any = req.headers
+  const id: any = req.headers
     .get("referer")
     ?.replace("http://localhost:3000/profile/", "");
 
   try {
     const user = await client.user.findUnique({
       where: {
-        id: +params,
+        id: +id,
       },
       select: {
         id: true,
@@ -22,9 +22,26 @@ export async function GET(req: Request) {
       },
     });
 
+    const like = await client.like.findMany({
+      take: 10,
+      where: {
+        userId: +id,
+      },
+      select: {
+        apt: {
+          select: {
+            id: true,
+            name: true,
+            dong: true,
+            treadAmount: true,
+          },
+        },
+      },
+    });
+
     if (!user) throw new Error();
 
-    return res.json({ ok: true, user });
+    return res.json({ ok: true, user, like });
   } catch {
     return res.json({
       ok: false,
