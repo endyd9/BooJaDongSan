@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "../../../lib/server/client";
+import client from "@/lib/server/client";
 
 export async function GET(req: Request) {
   const res = NextResponse;
