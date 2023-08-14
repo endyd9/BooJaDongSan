@@ -8,9 +8,8 @@ import { useEffect, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 
 export default function Header() {
-  const { data } = useSWR<IsLoggedInUserResponse>("/api/is-logged-in");
-  const { mutate } = useSWRConfig();
-  const [isLoggedIn, setIsLoggedIn] = useState(data?.ok);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data, mutate } = useSWR<IsLoggedInUserResponse>("/api/is-logged-in");
   const router = useRouter();
 
   const openMenu = () => {
@@ -35,8 +34,11 @@ export default function Header() {
     closeMenu();
     return router.push("/");
   };
+
   useEffect(() => {
-    setIsLoggedIn(data?.ok);
+    if (data?.ok) {
+      setIsLoggedIn(data.ok);
+    }
   }, [data]);
   return (
     <header className="z-10 fixed bg-white w-full max-w-xl py-6 px-5 flex flex-row justify-between border-b-2">

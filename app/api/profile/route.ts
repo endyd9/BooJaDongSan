@@ -1,14 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { client } from "@/lib/server/client";
 
 export async function GET(req: Request) {
   const res = NextResponse;
+  console.log(req.headers.get("referer"));
 
   // 요청한 URL에서 id값 추출
-
   const id: any = req.headers
     .get("referer")
-    ?.replace("http://localhost:3000/profile/", "");
+    ?.replace("http://localhost:3000/profile/", "")
+    .replace("http://192.168.45.17:3000/profile/", "");
 
   try {
     const user = await client.user.findUnique({

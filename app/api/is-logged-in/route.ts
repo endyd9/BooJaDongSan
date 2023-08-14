@@ -1,14 +1,14 @@
-import { verify } from "@/lib/server/jwtUtil";
-import { cookies } from "next/dist/client/components/headers";
 import { NextResponse } from "next/server";
+import { verify } from "@/lib/server/jwtUtil";
 import { client } from "@/lib/server/client";
+import { cookies } from "next/headers";
 
 export async function GET(req: Request) {
   const res = NextResponse;
 
-  try {
-    const token: any = cookies().get("x-jwt")?.value;
+  const token: any = cookies().get("x-jwt")?.value;
 
+  try {
     const userId: any = verify(token);
 
     const user = await client.user.findUnique({
@@ -19,6 +19,8 @@ export async function GET(req: Request) {
         id: true,
       },
     });
+
+    if (!user) throw new Error();
 
     return res.json({ ok: true, user });
   } catch {

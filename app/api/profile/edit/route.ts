@@ -1,7 +1,7 @@
 import { verify } from "@/lib/server/jwtUtil";
 import { cookies } from "next/dist/client/components/headers";
 import { NextResponse } from "next/server";
-import client from "../../../../lib/server/client";
+import { client } from "@/lib/server/client";
 import { hashing } from "@/lib/server/hashPassword";
 
 export async function GET(req: Request) {

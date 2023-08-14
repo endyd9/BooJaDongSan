@@ -4,13 +4,11 @@ import { ListData } from "@/lib/types";
 import Link from "next/link";
 
 export default function List({ itemList }: any) {
-  console.log(itemList.length);
-
   return (
     <div className="mt-10 w-full px-1">
       <ul>
         {itemList?.map((apt: ListData) => (
-          <Link key={apt.id} href={"/"}>
+          <Link key={apt.id} href={`/apt/${apt.id}`}>
             <li className="w-full mb-3 grid grid-flow-col grid-cols-2 items-center justify-between px-5 h-20 border-gray-500 border shadow-xl">
               <div className="w-[110%] flex justify-between">
                 <span>{apt.name}</span>

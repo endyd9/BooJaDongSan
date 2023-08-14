@@ -23,7 +23,7 @@ export interface ListData {
 
 export interface IsLoggedInUserResponse {
   ok: boolean;
-  user: {
+  user?: {
     id: number;
   };
 }

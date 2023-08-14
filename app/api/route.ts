@@ -50,7 +50,7 @@ export async function GET(req: Request) {
   } catch {
     return res.json({
       ok: false,
-      error: "부동산 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      error: "부동산 목록을 불러오지 못했습니다.\n 잠시 후 다시 시도해 주세요.",
     });
   }
 }

@@ -35,7 +35,7 @@ export default function MyPage() {
   }
 
   useEffect(() => {
-    setIsMy(data?.user?.id === isLoggedIn?.user?.id + "");
+    setIsMy(data?.user?.id === isLoggedIn?.user?.id);
   }, [data]);
 
   return (

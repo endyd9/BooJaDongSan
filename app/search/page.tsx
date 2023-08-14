@@ -15,8 +15,6 @@ export default function Search() {
 
   const { register, handleSubmit } = useForm<SearchForm>();
 
-  const data = [{ 아파트: "ㅁㄴㅇ", 거래금액: 111 }];
-
   const onSearch = (searchForm: SearchForm) => {
     if (searchForm.keyword === "") return alert("검색어를 입력하세요.");
     setKeyword(searchForm.keyword);
@@ -94,9 +92,7 @@ export default function Search() {
           </svg>
         </button>
       </form>
-      <div className="h-1/2 flex justify-center my-5 px-5">
-        <List itemList={data} />
-      </div>
+      <div className="h-1/2 flex justify-center my-5 px-5"></div>
     </main>
   );
 }

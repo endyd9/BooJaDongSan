@@ -9,7 +9,6 @@ export default function Home() {
   const { data } = useSWR(`/api?selector=${selctor ? "view" : "like"}`);
   if (data?.ok === false) {
     alert(data.error);
-    return location.reload();
   }
 
   const onSelectorClicked: any = (event: React.ChangeEvent<HTMLElement>) => {

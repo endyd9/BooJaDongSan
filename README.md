@@ -4,14 +4,18 @@
 
 # ToDo
 
+- 프로필 페이지 리팩토링
+
 ## Page 명세
 
-- 메인✅
+- 메인 기능구현✅
 - 회원가입 기능구현✅
 - 로그인, 로그아웃 기능구현✅
 - 검색✅
-- 마이페이지✅
-- 내 정보 수정✅
+- 마이페이지 기능구현✅
+- 내 정보 수정 기능구현✅
+- 매물상세✅
+- 커뮤니티기능(넣을지 말지 고민중)
 
 ## DB 명세
 
@@ -41,7 +45,7 @@
 - buildYear : number
 - treadDate : number
 - treadAmount : number
-- cityCode : number
+- cityCode : string
 - dong : string
 - roadName : string
 - buildingNumber : number
