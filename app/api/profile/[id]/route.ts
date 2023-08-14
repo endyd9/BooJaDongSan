@@ -1,20 +1,17 @@
 import { NextResponse } from "next/server";
 import { client } from "@/lib/server/client";
 
-export async function GET(req: Request) {
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   const res = NextResponse;
-  console.log(req.headers.get("referer"));
-
-  // 요청한 URL에서 id값 추출
-  const id: any = req.headers
-    .get("referer")
-    ?.replace("http://localhost:3000/profile/", "")
-    .replace("http://192.168.45.17:3000/profile/", "");
+  const page = new URL(req.url).searchParams.get("page");
 
   try {
     const user = await client.user.findUnique({
       where: {
-        id: +id,
+        id: +params.id,
       },
       select: {
         id: true,
@@ -23,10 +20,18 @@ export async function GET(req: Request) {
       },
     });
 
+    if (!user) throw new Error();
+
+    if (page === null)
+      return res.json({
+        ok: true,
+        user,
+      });
     const like = await client.like.findMany({
-      take: 10,
+      skip: (+page - 1) * 5,
+      take: 5,
       where: {
-        userId: +id,
+        userId: +params.id,
       },
       select: {
         apt: {
@@ -40,9 +45,18 @@ export async function GET(req: Request) {
       },
     });
 
-    if (!user) throw new Error();
+    const count = await client.like.count({
+      where: {
+        userId: +params.id,
+      },
+    });
 
-    return res.json({ ok: true, user, like });
+    return res.json({
+      ok: true,
+      user,
+      like,
+      totalPage: Array.from({ length: Math.ceil(count / 5) }, () => 0),
+    });
   } catch {
     return res.json({
       ok: false,

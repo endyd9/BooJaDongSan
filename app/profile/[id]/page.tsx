@@ -13,26 +13,34 @@ interface UserInfoResponse {
     email: string;
     nickName: string;
   };
-  like: [{ apt: ListData }];
+  like: [apt: ListData];
+  totalPage: [];
   error?: string;
 }
 
-export default function MyPage() {
+export default function MyPage({ params }: { params: { id: string } }) {
   const [isMy, setIsMy] = useState(false);
-  const { data } = useSWR<UserInfoResponse>("/api/profile");
+  const [page, setPage] = useState(1);
+
+  const { data } = useSWR<UserInfoResponse>(
+    `/api/profile/${params.id}?page=${page}`
+  );
   const { data: isLoggedIn } =
     useSWR<IsLoggedInUserResponse>("/api/is-logged-in");
 
   const apts: any = [];
   if (data?.ok === true) {
-    data?.like.forEach((apt) => {
+    data?.like.forEach((apt: any) => {
       const {
         apt: { id, name, dong, treadAmount },
       } = apt;
-
       apts.push({ id, name, treadAmount, dong });
     });
   }
+
+  const onPageClick: any = (event: React.ChangeEvent<HTMLElement>) => {
+    setPage(+event.target.innerText);
+  };
 
   useEffect(() => {
     setIsMy(data?.user?.id === isLoggedIn?.user?.id);
@@ -56,8 +64,22 @@ export default function MyPage() {
           </div>
           <div className="flex flex-col w-full px-3">
             <h1 className="ml-3 text-xl ">관심 매물</h1>
-            {data?.like.length > 0 ? (
-              <List itemList={apts} />
+            {data?.like ? (
+              <>
+                <List itemList={apts} />
+                <ul className="flex justify-center">
+                  {data.totalPage.map((_, i) => (
+                    <li key={i} className="mx-2">
+                      <button
+                        onClick={onPageClick}
+                        className={page === i + 1 ? "font-bold" : ""}
+                      >
+                        {i + 1}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </>
             ) : (
               <p className="mt-28 text-center">등록된 관심매물이 없습니다.</p>
             )}

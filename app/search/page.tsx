@@ -21,7 +21,7 @@ export default function Search() {
     setPlaceholder(searchForm.keyword);
   };
 
-  const onSubmenuClick: any = (event: React.ChangeEvent<HTMLElement>): void => {
+  const onSubmenuClick: any = (event: React.ChangeEvent<HTMLElement>) => {
     const smenus = document.getElementById("smenus") as HTMLElement;
     const smenuList = smenus.querySelectorAll("div") as NodeListOf<Element>;
     smenuList.forEach((smenu) => {
