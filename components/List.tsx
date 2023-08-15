@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function List({ itemList }: any) {
   return (
-    <div className="mt-10 w-full px-1">
+    <div className="w-full px-1">
       <ul>
         {itemList?.map((apt: ListData) => (
           <Link key={apt.id} href={`/apt/${apt.id}`}>

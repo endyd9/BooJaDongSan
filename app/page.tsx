@@ -46,7 +46,9 @@ export default function Home() {
           <h1 className="text-2xl mt-52">로딩중...</h1>
         </div>
       ) : data?.ok === true ? (
-        <List itemList={data?.apts} />
+        <div className="mt-10">
+          <List itemList={data?.apts} />
+        </div>
       ) : (
         <p className="absolute top-[50%] w-full text-center">
           데이터 로드 실패

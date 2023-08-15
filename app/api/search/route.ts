@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { client } from "@/lib/server/client";
+import { Prisma } from "@prisma/client";
 
 export async function GET(req: Request) {
   const res = NextResponse;
@@ -13,10 +14,12 @@ export async function GET(req: Request) {
     });
 
   try {
+    let apts;
+    let query: Prisma.AptFindManyArgs;
+    let count = 1;
     switch (searchParams.get("category")) {
       case "전체": {
-        console.log(keyword);
-        const apts = await client.apt.findMany({
+        query = {
           take: 10,
           where: {
             OR: [
@@ -58,14 +61,15 @@ export async function GET(req: Request) {
             treadAmount: true,
             dong: true,
           },
+        };
+        apts = await client.apt.findMany(query);
+        count = await client.apt.count({
+          where: query.where,
         });
-        return res.json({
-          ok: true,
-          apts,
-        });
+        break;
       }
       case "아파트 명": {
-        const apts = await client.apt.findMany({
+        query = {
           take: 10,
           where: {
             name: {
@@ -78,14 +82,15 @@ export async function GET(req: Request) {
             treadAmount: true,
             dong: true,
           },
+        };
+        apts = await client.apt.findMany(query);
+        count = await client.apt.count({
+          where: query.where,
         });
-        return res.json({
-          ok: true,
-          apts,
-        });
+        break;
       }
       case "법정동": {
-        const apts = await client.apt.findMany({
+        query = {
           take: 10,
           where: {
             dong: {
@@ -98,18 +103,19 @@ export async function GET(req: Request) {
             treadAmount: true,
             dong: true,
           },
+        };
+        apts = await client.apt.findMany(query);
+        count = await client.apt.count({
+          where: query.where,
         });
-        return res.json({
-          ok: true,
-          apts,
-        });
+        break;
       }
       case "평 형": {
-        const apts = await client.apt.findMany({
+        query = {
           take: 10,
           where: {
             dedicatedArea: {
-              equals: +`${keyword}` | 0,
+              equals: +`${keyword}`,
             },
           },
           select: {
@@ -118,18 +124,19 @@ export async function GET(req: Request) {
             treadAmount: true,
             dong: true,
           },
+        };
+        apts = await client.apt.findMany(query);
+        count = await client.apt.count({
+          where: query.where,
         });
-        return res.json({
-          ok: true,
-          apts,
-        });
+        break;
       }
       case "거래액": {
-        const apts = await client.apt.findMany({
+        query = {
           take: 10,
           where: {
             treadAmount: {
-              equals: +`${keyword}` | 0,
+              equals: +`${keyword}`,
             },
           },
           select: {
@@ -138,18 +145,19 @@ export async function GET(req: Request) {
             treadAmount: true,
             dong: true,
           },
+        };
+        apts = await client.apt.findMany(query);
+        count = await client.apt.count({
+          where: query.where,
         });
-        return res.json({
-          ok: true,
-          apts,
-        });
+        break;
       }
       case "거래일자": {
-        const apts = await client.apt.findMany({
+        query = {
           take: 10,
           where: {
             treadDate: {
-              equals: +`${keyword}` | 0,
+              equals: +`${keyword}`,
             },
           },
           select: {
@@ -158,18 +166,19 @@ export async function GET(req: Request) {
             treadAmount: true,
             dong: true,
           },
+        };
+        apts = await client.apt.findMany(query);
+        count = await client.apt.count({
+          where: query.where,
         });
-        return res.json({
-          ok: true,
-          apts,
-        });
+        break;
       }
       case "건축년도": {
-        const apts = await client.apt.findMany({
+        query = {
           take: 10,
           where: {
             buildYear: {
-              equals: +`${keyword}` | 0,
+              equals: +`${keyword}`,
             },
           },
           select: {
@@ -178,17 +187,20 @@ export async function GET(req: Request) {
             treadAmount: true,
             dong: true,
           },
+        };
+        apts = await client.apt.findMany(query);
+        count = await client.apt.count({
+          where: query.where,
         });
-        return res.json({
-          ok: true,
-          apts,
-        });
+        break;
       }
     }
-  } catch (error) {
-    console.log(error);
-
-    console.log("펑");
+    return res.json({
+      ok: true,
+      apts,
+      totalPage: Math.ceil(count / 5),
+    });
+  } catch {
     return res.json({
       ok: false,
       error: "부동산 목록을 불러오지 못했습니다.\n 잠시 후 다시 시도해 주세요.",

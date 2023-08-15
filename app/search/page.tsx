@@ -9,6 +9,7 @@ import useSWR from "swr";
 interface SearchResponse {
   ok: boolean;
   apts: ListData[];
+  totalPage: number;
   error?: string;
 }
 interface SearchForm {
@@ -19,7 +20,7 @@ export default function Search() {
   const [placeholde, setPlaceholder] = useState("전체조건");
   const [category, setCategory] = useState("전체");
   const [keyword, setKeyword] = useState("");
-  const { data, mutate } = useSWR<SearchResponse>(
+  const { data, mutate, isLoading } = useSWR<SearchResponse>(
     `api/search?keyword=${keyword}&category=${category}`
   );
 
@@ -103,8 +104,16 @@ export default function Search() {
           </svg>
         </button>
       </form>
-      <div className="h-1/2 flex justify-center px-5 mt-3 fixed overflow-y-scroll">
-        {data?.apts ? <List itemList={data.apts} /> : null}
+      <div className="h-[45%] w-full flex justify-center px-5 mt-5 pb-10 fixed overflow-y-scroll">
+        {isLoading ? (
+          "검색중..."
+        ) : data?.apts ? (
+          data.apts.length === 0 ? (
+            <h1 className="text-xl mt-20">검색 결과가 없습니다.</h1>
+          ) : (
+            <List itemList={data.apts} />
+          )
+        ) : null}
       </div>
     </main>
   );

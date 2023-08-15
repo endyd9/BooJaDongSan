@@ -12,14 +12,6 @@ export async function GET(
   const { id } = params;
 
   const token: any = req.headers.get("cookie")?.replace("x-jwt=", "");
-  let userId: any;
-  if (token === undefined) {
-    userId = {
-      id: null,
-    };
-  } else {
-    userId = verify(token);
-  }
 
   try {
     const apt = await client.apt.update({
@@ -32,15 +24,26 @@ export async function GET(
         },
       },
     });
-
-    const isLike = Boolean(
-      await client.like.findFirst({
-        where: {
-          aptId: +id,
-          userId: +userId.id,
-        },
-      })
-    );
+    let userId: any;
+    let isLike;
+    try {
+      if (token === undefined) {
+        userId = {
+          id: null,
+        };
+      } else {
+        userId = verify(token);
+        console.log(userId);
+      }
+      isLike = Boolean(
+        await client.like.findFirst({
+          where: {
+            aptId: +id,
+            userId: +userId.id,
+          },
+        })
+      );
+    } catch {}
 
     const { data } = await axios.get(
       `https://dapi.kakao.com/v2/local/search/address?query=${apt.dong} ${
@@ -61,7 +64,7 @@ export async function GET(
       ok: true,
       apt,
       coords,
-      isLike,
+      isLike: typeof isLike === "boolean" ? isLike : false,
     });
   } catch {
     return res.json({

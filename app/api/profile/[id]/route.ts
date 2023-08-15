@@ -1,11 +1,18 @@
 import { NextResponse } from "next/server";
 import { client } from "@/lib/server/client";
+import { cookies } from "next/headers";
+import { verify } from "@/lib/server/jwtUtil";
 
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
   const res = NextResponse;
+  const token: any = cookies().get("x-jwt")?.value;
+  let userId: any = 0;
+  if (token !== undefined) {
+    userId = verify(token);
+  }
   const page = new URL(req.url).searchParams.get("page");
 
   try {
@@ -27,35 +34,38 @@ export async function GET(
         ok: true,
         user,
       });
-    const like = await client.like.findMany({
-      skip: (+page - 1) * 5,
-      take: 5,
-      where: {
-        userId: +params.id,
-      },
-      select: {
-        apt: {
-          select: {
-            id: true,
-            name: true,
-            dong: true,
-            treadAmount: true,
+
+    const like = await client.$transaction([
+      client.like.findMany({
+        skip: (+page - 1) * 5,
+        take: 5,
+        where: {
+          userId: +params.id,
+        },
+        select: {
+          apt: {
+            select: {
+              id: true,
+              name: true,
+              dong: true,
+              treadAmount: true,
+            },
           },
         },
-      },
-    });
-
-    const count = await client.like.count({
-      where: {
-        userId: +params.id,
-      },
-    });
+      }),
+      client.like.count({
+        where: {
+          userId: +params.id,
+        },
+      }),
+    ]);
 
     return res.json({
       ok: true,
       user,
-      like,
-      totalPage: Array.from({ length: Math.ceil(count / 5) }, () => 0),
+      like: like[0],
+      isOwner: params.id == userId.id,
+      totalPage: Array.from({ length: Math.ceil(like[1] / 5) }, () => 0),
     });
   } catch {
     return res.json({
