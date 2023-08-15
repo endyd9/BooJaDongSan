@@ -10,12 +10,12 @@ export default function List({ itemList }: any) {
         {itemList?.map((apt: ListData) => (
           <Link key={apt.id} href={`/apt/${apt.id}`}>
             <li className="w-full mb-3 grid grid-flow-col grid-cols-2 items-center justify-between px-5 h-20 border-gray-500 border shadow-xl">
-              <div className="w-[110%] flex justify-between">
-                <span>{apt.name}</span>
-                <span>{apt.dong}</span>
+              <div className="w-[110%] flex items-center justify-between">
+                <span className="w-3/5">{apt.name}</span>
+                <span className="">{apt.dong}</span>
               </div>
               <div className="flex justify-end">
-                <span className="mr-1">거래금액:</span>
+                <span className="mx-1">거래금액:</span>
                 <span>
                   {apt.treadAmount > 9999
                     ? apt.treadAmount > 99999

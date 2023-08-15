@@ -1,24 +1,34 @@
 "use client";
 
 import List from "@/components/List";
+import { ListData } from "@/lib/types";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import useSWR from "swr";
 
+interface SearchResponse {
+  ok: boolean;
+  apts: ListData[];
+  error?: string;
+}
 interface SearchForm {
   keyword: string;
 }
 
 export default function Search() {
   const [placeholde, setPlaceholder] = useState("전체조건");
-  const [keyword, setKeyword] = useState("");
   const [category, setCategory] = useState("전체");
+  const [keyword, setKeyword] = useState("");
+  const { data, mutate } = useSWR<SearchResponse>(
+    `api/search?keyword=${keyword}&category=${category}`
+  );
 
   const { register, handleSubmit } = useForm<SearchForm>();
 
   const onSearch = (searchForm: SearchForm) => {
     if (searchForm.keyword === "") return alert("검색어를 입력하세요.");
     setKeyword(searchForm.keyword);
-    setPlaceholder(searchForm.keyword);
+    mutate(`api/search?keyword=${keyword}&category=${category}`);
   };
 
   const onSubmenuClick: any = (event: React.ChangeEvent<HTMLElement>) => {
@@ -36,8 +46,9 @@ export default function Search() {
     setCategory(event.target.innerText);
     setPlaceholder(event.target.innerText);
   };
+
   return (
-    <main className="h-screen pt-28">
+    <main className="pt-28 overflow-y-hidden">
       <h1 className="text-3xl ml-5 font-extralight">Search</h1>
       <hr className="border-gray-300 mt-5 w-[95%] ml-3" />
       <br />
@@ -50,7 +61,7 @@ export default function Search() {
           아파트 명
         </div>
         <div className="flex items-center justify-center border-2 border-gray-200">
-          시,군,구
+          법정동
         </div>
         <div className="flex items-center justify-center border-2 border-gray-200">
           평 형
@@ -92,7 +103,9 @@ export default function Search() {
           </svg>
         </button>
       </form>
-      <div className="h-1/2 flex justify-center my-5 px-5"></div>
+      <div className="h-1/2 flex justify-center px-5 mt-3 fixed overflow-y-scroll">
+        {data?.apts ? <List itemList={data.apts} /> : null}
+      </div>
     </main>
   );
 }

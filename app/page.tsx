@@ -6,7 +6,9 @@ import useSWR from "swr";
 
 export default function Home() {
   const [selctor, setSelector] = useState(true);
-  const { data } = useSWR(`/api?selector=${selctor ? "view" : "like"}`);
+  const { data, isLoading } = useSWR(
+    `/api?selector=${selctor ? "view" : "like"}`
+  );
   if (data?.ok === false) {
     alert(data.error);
   }
@@ -39,7 +41,11 @@ export default function Home() {
           좋아요 많은
         </button>
       </nav>
-      {data?.ok === true ? (
+      {isLoading ? (
+        <div>
+          <h1 className="text-2xl mt-52">로딩중...</h1>
+        </div>
+      ) : data?.ok === true ? (
         <List itemList={data?.apts} />
       ) : (
         <p className="absolute top-[50%] w-full text-center">

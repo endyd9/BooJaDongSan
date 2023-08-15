@@ -22,7 +22,7 @@ export async function GET(
 
     if (!user) throw new Error();
 
-    if (page === null)
+    if (!page)
       return res.json({
         ok: true,
         user,
