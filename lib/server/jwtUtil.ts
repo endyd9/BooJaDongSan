@@ -1,12 +1,17 @@
 import * as jwt from "jsonwebtoken";
 
+const secret: string = process.env.JWT_SECRET!;
+
 export const sign = (id: string) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET!, {
+  const token = jwt.sign({ id }, secret, {
     algorithm: "HS256",
-    expiresIn: "24h",
+    expiresIn: "14d",
   });
+  return {
+    token,
+  };
 };
 
 export const verify = (token: string) => {
-  return jwt.verify(token, process.env.JWT_SECRET!);
+  return jwt.verify(token, secret);
 };

@@ -5,12 +5,10 @@ import { client } from "@/lib/server/client";
 import { hashing } from "@/lib/server/hashPassword";
 
 export async function GET(req: Request) {
-  const token: any = cookies().get("x-jwt")?.value;
-
-  const userId: any = verify(token);
-
   const res = NextResponse;
+  const token: any = cookies().get("x-jwt")?.value;
   try {
+    const userId: any = verify(token);
     const user = await client.user.findUnique({
       where: {
         id: +userId.id,

@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const token = sign(user.id + "");
+    const { token } = sign(user.id + "");
 
     return res.json({ ok: true, token });
   } catch {

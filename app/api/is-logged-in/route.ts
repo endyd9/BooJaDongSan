@@ -7,7 +7,6 @@ export async function GET(req: Request) {
   const res = NextResponse;
 
   const token: any = cookies().get("x-jwt")?.value;
-
   try {
     const userId: any = verify(token);
 

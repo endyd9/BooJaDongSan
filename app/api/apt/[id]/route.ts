@@ -33,7 +33,6 @@ export async function GET(
         };
       } else {
         userId = verify(token);
-        console.log(userId);
       }
       isLike = Boolean(
         await client.like.findFirst({

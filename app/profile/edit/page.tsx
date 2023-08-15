@@ -3,6 +3,7 @@
 import { UserInfoForm } from "@/app/join/page";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 
@@ -40,7 +41,6 @@ export default function Edit() {
       };
 
       const { data } = await axios.post("/api/profile/edit", submitForm);
-      console.log(data.ok);
 
       if (data.ok === false) {
         throw new Error();
@@ -53,6 +53,13 @@ export default function Edit() {
       );
     }
   };
+
+  useEffect(() => {
+    if (data?.ok === false) {
+      alert("접근 권한이 없습니다.");
+      router.push("/login");
+    }
+  }, [data]);
   return (
     <main className="h-screen flex flex-col items-center justify-center pb-10">
       <h1 className="mx-10 text-2xl bg-white font-extralight">
