@@ -65,7 +65,7 @@ export async function GET(
       user,
       like: like[0],
       isOwner: params.id == userId.id,
-      totalPage: Array.from({ length: Math.ceil(like[1] / 5) }, () => 0),
+      totalPage: Math.ceil(like[1] / 5),
     });
   } catch {
     return res.json({

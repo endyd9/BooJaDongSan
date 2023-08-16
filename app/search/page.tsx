@@ -1,8 +1,9 @@
 "use client";
 
 import List from "@/components/List";
+import ChangePage from "@/components/changePage";
 import { ListData } from "@/lib/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 
@@ -20,8 +21,10 @@ export default function Search() {
   const [placeholde, setPlaceholder] = useState("전체조건");
   const [category, setCategory] = useState("전체");
   const [keyword, setKeyword] = useState("");
+  const [page, setPage] = useState(1);
+
   const { data, mutate, isLoading } = useSWR<SearchResponse>(
-    `api/search?keyword=${keyword}&category=${category}`
+    `api/search?keyword=${keyword}&category=${category}&page=${page}`
   );
 
   const { register, handleSubmit } = useForm<SearchForm>();
@@ -29,10 +32,12 @@ export default function Search() {
   const onSearch = (searchForm: SearchForm) => {
     if (searchForm.keyword === "") return alert("검색어를 입력하세요.");
     setKeyword(searchForm.keyword);
-    mutate(`api/search?keyword=${keyword}&category=${category}`);
+    mutate(`api/search?keyword=${keyword}&category=${category}&page=${page}`);
+    setPage(1);
   };
 
   const onSubmenuClick: any = (event: React.ChangeEvent<HTMLElement>) => {
+    setPage(1);
     const smenus = document.getElementById("smenus") as HTMLElement;
     const smenuList = smenus.querySelectorAll("div") as NodeListOf<Element>;
     smenuList.forEach((smenu) => {
@@ -46,6 +51,11 @@ export default function Search() {
     event.target.classList.add("bg-gray-400");
     setCategory(event.target.innerText);
     setPlaceholder(event.target.innerText);
+  };
+
+  const pageTo = (page: number) => {
+    setPage(page);
+    mutate(`api/search?keyword=${keyword}&category=${category}&page=${page}`);
   };
 
   return (
@@ -104,7 +114,7 @@ export default function Search() {
           </svg>
         </button>
       </form>
-      <div className="h-[45%] w-full flex justify-center px-5 mt-5 pb-10 fixed overflow-y-scroll">
+      <div className="h-[45%] w-full flex justify-center px-5 my-5 overflow-y-scroll">
         {isLoading ? (
           "검색중..."
         ) : data?.apts ? (
@@ -115,6 +125,9 @@ export default function Search() {
           )
         ) : null}
       </div>
+      {data?.totalPage ? (
+        <ChangePage pages={data.totalPage} currentPage={page} pageTo={pageTo} />
+      ) : null}
     </main>
   );
 }

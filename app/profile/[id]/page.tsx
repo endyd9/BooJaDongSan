@@ -1,6 +1,7 @@
 "use client";
 
 import List from "@/components/List";
+import ChangePage from "@/components/changePage";
 import { IsLoggedInUserResponse, ListData } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -15,7 +16,7 @@ interface UserInfoResponse {
   };
   isOwner: boolean;
   like: [apt: ListData];
-  totalPage: [];
+  totalPage: number;
   error?: string;
 }
 
@@ -36,9 +37,6 @@ export default function MyPage({ params }: { params: { id: string } }) {
     });
   }
 
-  const onPageClick: any = (event: React.ChangeEvent<HTMLElement>) => {
-    setPage(+event.target.innerText);
-  };
   return (
     <main className="pt-28 flex max-h-screen flex-col items-center justify-between py-5">
       {isLoading ? (
@@ -64,18 +62,11 @@ export default function MyPage({ params }: { params: { id: string } }) {
             {data.like.length > 0 ? (
               <div className="mt-10">
                 <List itemList={apts} />
-                <ul className="flex justify-center">
-                  {data.totalPage.map((_, i) => (
-                    <li key={i} className="mx-2">
-                      <button
-                        onClick={onPageClick}
-                        className={page === i + 1 ? "font-bold" : ""}
-                      >
-                        {i + 1}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                <ChangePage
+                  pages={data.totalPage}
+                  currentPage={page}
+                  pageTo={setPage}
+                />
               </div>
             ) : (
               <p className="mt-28 text-center">등록된 관심매물이 없습니다.</p>
