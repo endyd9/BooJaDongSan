@@ -23,23 +23,27 @@ export default function List(props: ListProps) {
                 <li className="w-full mb-3 grid grid-flow-col grid-cols-2 items-center justify-between px-5 h-20 border-gray-500 border shadow-xl">
                   <div className="w-[130%] flex items-center justify-between">
                     <div className="w-[50%] grid grid-cols-1">
-                      <span className="">{apt.name}</span>
-                      <span>
-                        ({apt.dong}
-                        {apt.dedicatedArea}형)
+                      <span className="text-center">{apt.name}</span>
+                      <span className="text-center">
+                        ({apt.dong} {apt.dedicatedArea}형)
                       </span>
                     </div>
                     <div className="w-[55%] grid grid-cols-2 text-end">
-                      <span>최저가:</span>
-                      {apt.min > 9999
-                        ? apt.min > 99999
-                          ? `${apt.min.toString().slice(0, 2)} 억`
-                          : `${apt.min
-                              .toString()
-                              .slice(0, 2)
-                              .replace(/(\d)(?=(?:\d{1})+(?!\d))/g, "$1.")} 억`
-                        : `${apt.min} 만`}
-                      <span>최고가:</span>
+                      <span>최저가 :</span>
+                      <span>
+                        {apt.min > 9999
+                          ? apt.min > 99999
+                            ? `${apt.min.toString().slice(0, 2)} 억`
+                            : `${apt.min
+                                .toString()
+                                .slice(0, 2)
+                                .replace(
+                                  /(\d)(?=(?:\d{1})+(?!\d))/g,
+                                  "$1."
+                                )} 억`
+                          : `${apt.min} 만`}
+                      </span>
+                      <span>최고가 :</span>
                       <span>
                         {apt.max > 9999
                           ? apt.max > 99999

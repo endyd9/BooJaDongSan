@@ -38,7 +38,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main className="pt-28 flex max-h-screen flex-col items-center justify-between py-5">
+    <main className="pt-24 flex max-h-screen flex-col items-center justify-between py-5">
       {isLoading ? (
         <div>
           <h1 className="text-2xl mt-52">로딩중...</h1>
@@ -60,7 +60,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
           <div className="flex flex-col w-full px-3">
             <h1 className="ml-3 text-xl ">관심 매물</h1>
             {data.like.length > 0 ? (
-              <div className="mt-10">
+              <div className="mt-5">
                 <List itemList={apts} />
                 <ChangePage
                   pages={data.totalPage}
