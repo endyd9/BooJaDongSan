@@ -103,7 +103,7 @@ export default function Header() {
               <li className="text-lg font-extralight">Search</li>
             </Link>
             <Link onClick={closeMenu} href="/rise">
-              <li className="text-lg font-extralight">Rise comparison</li>
+              <li className="text-lg font-extralight">Top 10</li>
             </Link>
             <div className="absolute w-full bottom-0">
               {isLoggedIn ? (

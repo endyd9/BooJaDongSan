@@ -11,8 +11,6 @@ interface ListProps {
 }
 
 export default function List(props: ListProps) {
-  console.log(props);
-
   return (
     <div className="w-full px-1">
       <ul>
@@ -20,7 +18,7 @@ export default function List(props: ListProps) {
           ? props.riseList?.map((apt, i) => (
               <Link
                 key={i}
-                href={`/search?category="name"&keyword=${apt.name}`}
+                href={`/search?keyword=${apt.name}&category=아파트 명&page=1`}
               >
                 <li className="w-full mb-3 grid grid-flow-col grid-cols-2 items-center justify-between px-5 h-20 border-gray-500 border shadow-xl">
                   <div className="w-[130%] flex items-center justify-between">

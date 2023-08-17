@@ -75,9 +75,7 @@ export async function GET(req: Request) {
           skip: (+searchParams.get("page")! - 1) * 10,
           take: 10,
           where: {
-            name: {
-              contains: `${keyword}`,
-            },
+            name: keyword || "",
           },
           select: {
             id: true,
