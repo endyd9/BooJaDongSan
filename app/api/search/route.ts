@@ -17,10 +17,11 @@ export async function GET(req: Request) {
     let apts;
     let query: Prisma.AptFindManyArgs;
     let count = 1;
+
     switch (searchParams.get("category")) {
       case "전체": {
         query = {
-          skip: (+searchParams.get("page")! - 1) * 5,
+          skip: (+searchParams.get("page")! - 1) * 10,
           take: 10,
           where: {
             OR: [
@@ -71,7 +72,7 @@ export async function GET(req: Request) {
       }
       case "아파트 명": {
         query = {
-          skip: (+searchParams.get("page")! - 1) * 5,
+          skip: (+searchParams.get("page")! - 1) * 10,
           take: 10,
           where: {
             name: {
@@ -93,7 +94,7 @@ export async function GET(req: Request) {
       }
       case "법정동": {
         query = {
-          skip: (+searchParams.get("page")! - 1) * 5,
+          skip: (+searchParams.get("page")! - 1) * 10,
           take: 10,
           where: {
             dong: {
@@ -115,7 +116,7 @@ export async function GET(req: Request) {
       }
       case "평 형": {
         query = {
-          skip: (+searchParams.get("page")! - 1) * 5,
+          skip: (+searchParams.get("page")! - 1) * 10,
           take: 10,
           where: {
             dedicatedArea: {
@@ -137,7 +138,7 @@ export async function GET(req: Request) {
       }
       case "거래액": {
         query = {
-          skip: (+searchParams.get("page")! - 1) * 5,
+          skip: (+searchParams.get("page")! - 1) * 10,
           take: 10,
           where: {
             treadAmount: {
@@ -159,7 +160,7 @@ export async function GET(req: Request) {
       }
       case "거래일자": {
         query = {
-          skip: (+searchParams.get("page")! - 1) * 5,
+          skip: (+searchParams.get("page")! - 1) * 10,
           take: 10,
           where: {
             treadDate: {
@@ -181,7 +182,7 @@ export async function GET(req: Request) {
       }
       case "건축년도": {
         query = {
-          skip: (+searchParams.get("page")! - 1) * 5,
+          skip: (+searchParams.get("page")! - 1) * 10,
           take: 10,
           where: {
             buildYear: {
@@ -202,10 +203,11 @@ export async function GET(req: Request) {
         break;
       }
     }
+
     return res.json({
       ok: true,
       apts,
-      totalPage: Math.ceil(count / 5),
+      totalPage: Math.ceil(count / 10),
     });
   } catch {
     return res.json({

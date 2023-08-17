@@ -39,8 +39,8 @@ export default function KakaoMap(props: any) {
     }
   }, []);
   return (
-    <div id="map" className="w-full h-60 bg-teal-300 mb-10">
-      여기 지도자리
+    <div id="map" className="w-full h-60 mb-10">
+      로딩중...
     </div>
   );
 }

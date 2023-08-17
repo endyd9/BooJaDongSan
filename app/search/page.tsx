@@ -3,7 +3,7 @@
 import List from "@/components/List";
 import ChangePage from "@/components/changePage";
 import { ListData } from "@/lib/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 
@@ -54,8 +54,11 @@ export default function Search() {
   };
 
   const pageTo = (page: number) => {
+    window.scrollTo(0, 0);
     setPage(page);
-    mutate(`api/search?keyword=${keyword}&category=${category}&page=${page}`);
+    setTimeout(() => {
+      mutate(`api/search?keyword=${keyword}&category=${category}&page=${page}`);
+    }, 1000);
   };
 
   return (
