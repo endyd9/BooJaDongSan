@@ -99,8 +99,11 @@ export default function Header() {
 
         <div>
           <ul className="mt-5 pl-3 h-screen">
-            <Link onClick={closeMenu} href={"/search"}>
+            <Link onClick={closeMenu} href="/search">
               <li className="text-lg font-extralight">Search</li>
+            </Link>
+            <Link onClick={closeMenu} href="/rise">
+              <li className="text-lg font-extralight">Rise comparison</li>
             </Link>
             <div className="absolute w-full bottom-0">
               {isLoggedIn ? (

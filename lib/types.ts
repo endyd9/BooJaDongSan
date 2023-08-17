@@ -19,6 +19,7 @@ export interface ListData {
   name: string;
   treadAmount: number;
   dong: string;
+  isRise?: boolean;
 }
 
 export interface IsLoggedInUserResponse {
