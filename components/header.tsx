@@ -32,7 +32,8 @@ export default function Header() {
     deleteCookie("x-jwt");
     alert("로그아웃 되었습니다.");
     closeMenu();
-    return router.push("/");
+    router.push("/");
+    window.location.reload();
   };
 
   useEffect(() => {

@@ -12,9 +12,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   email     String   @unique
-  password  String
+  password  String?
   nickName  String
   address   String?
+  isGoogel  Boolean
   Like      Like[]
 }
 
@@ -34,7 +35,7 @@ model Apt {
   dedicatedArea    Int
   floor            Int
   buildYear        Int
-  treadDate        Int
+  treadDate        String
   treadAmount      Int
   cityCode         Int
   dong             String

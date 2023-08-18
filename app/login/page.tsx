@@ -4,6 +4,8 @@ import axios from "axios";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 interface LoginForm {
   email: string;
@@ -18,6 +20,27 @@ export default function Login() {
   const onSubmit = async (loginForm: LoginForm) => {
     try {
       const { data } = await axios.post("/api/login", loginForm);
+
+      if (data.error === undefined) {
+        const { token } = data;
+        setCookie("x-jwt", token);
+      } else {
+        return alert(data.error);
+      }
+
+      return router.push("/");
+    } catch {
+      alert("로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+      return location.reload();
+    }
+  };
+
+  const onGoogleLogin = async (res: CredentialResponse) => {
+    try {
+      const { data } = await axios.post("/api/login", {
+        data: res.credential,
+        isGoogle: true,
+      });
 
       if (data.error === undefined) {
         const { token } = data;
@@ -60,6 +83,24 @@ export default function Login() {
           value="Login"
         />
       </form>
+      <div className="mt-10 text-center bg-white font-extralight">
+        <span className="text-lg">Login With</span>
+        <hr className="my-3 border-gray-400" />
+        <div className="flex flex-col justify-between items-center">
+          <GoogleOAuthProvider
+            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
+          >
+            <GoogleLogin
+              onSuccess={(res: CredentialResponse) => {
+                onGoogleLogin(res);
+              }}
+              onError={() => {
+                alert("로그인 실패");
+              }}
+            />
+          </GoogleOAuthProvider>
+        </div>
+      </div>
     </main>
   );
 }

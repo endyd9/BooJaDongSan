@@ -26,11 +26,14 @@ export async function POST(req: Request) {
         password,
         nickName: nick,
         address: addr === "" ? null : addr,
+        isGoogel: false,
       },
     });
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (error) {
+    console.log(error);
+
     return NextResponse.json({
       ok: false,
       error: "가입에 실패했습니다. 잠시 후 다시 시도해 주세요.",

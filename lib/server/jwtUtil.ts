@@ -1,3 +1,4 @@
+import { GoogleUser } from "@/app/api/login/route";
 import * as jwt from "jsonwebtoken";
 
 const secret: string = process.env.JWT_SECRET!;
@@ -14,4 +15,8 @@ export const sign = (id: string) => {
 
 export const verify = (token: string) => {
   return jwt.verify(token, secret);
+};
+
+export const decode = (credential: string) => {
+  return jwt.decode(credential);
 };

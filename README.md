@@ -4,8 +4,7 @@
 
 # ToDo
 
-- 거래일자 타입 바꾸거나 포멧 바꾸기
-- 외부 로그인 API (구글 or 카카오 둘 다 하면 좋음)
+- 구글 로그인 cors 이슈 해결
 - 커뮤니티기능(넣을지 말지 고민중)
 
 ## Page 명세
@@ -17,7 +16,7 @@
 - 마이페이지 -> 구현✅
 - 내 정보 수정 -> 구현✅
 - 거래 상세 -> 구현✅
-- 가격상승률 -> 구현✅
+- Top10 -> 구현✅
 
 ## DB 명세
 
@@ -29,6 +28,8 @@
 - email : string
 - password : string
 - nickName : string
+- address : string
+- Like : Like[]
 
 ### Like
 
@@ -45,7 +46,7 @@
 - dedicatedArea : number
 - floor : number
 - buildYear : number
-- treadDate : number
+- treadDate : string
 - treadAmount : number
 - cityCode : string
 - dong : string
@@ -53,3 +54,4 @@
 - buildingNumber : number
 - buildingMinorNumber : number
 - view : number
+- Like : Like[]

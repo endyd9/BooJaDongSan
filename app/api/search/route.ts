@@ -37,22 +37,22 @@ export async function GET(req: Request) {
               },
               {
                 dedicatedArea: {
-                  equals: +`${keyword}` | 0,
+                  equals: +`${keyword}` || 0,
                 },
               },
               {
                 treadAmount: {
-                  equals: +`${keyword}` | 0,
+                  equals: +`${keyword}` || 0,
                 },
               },
               {
                 treadDate: {
-                  equals: +`${keyword}` | 0,
+                  contains: `${keyword}`,
                 },
               },
               {
                 buildYear: {
-                  equals: +`${keyword}` | 0,
+                  equals: +`${keyword}` || 0,
                 },
               },
             ],
@@ -162,7 +162,7 @@ export async function GET(req: Request) {
           take: 10,
           where: {
             treadDate: {
-              equals: +`${keyword}`,
+              contains: `${keyword}`,
             },
           },
           select: {
