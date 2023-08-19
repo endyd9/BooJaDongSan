@@ -4,8 +4,11 @@ import axios from "axios";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import {
+  CredentialResponse,
+  GoogleLogin,
+  GoogleOAuthProvider,
+} from "@react-oauth/google";
 
 interface LoginForm {
   email: string;
@@ -91,6 +94,7 @@ export default function Login() {
             clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
           >
             <GoogleLogin
+              ux_mode="popup"
               onSuccess={(res: CredentialResponse) => {
                 onGoogleLogin(res);
               }}

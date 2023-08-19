@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 
 const kakaoMapSrc =
-  "https://developers.kakao.com/sdk/js/kakao.js http://dapi.kakao.com/v2/maps/sdk.js  http://t1.daumcdn.net/mapjsapi/js/main/4.4.12/kakao.js http://t1.daumcdn.net/mapjsapi/js/libs/services/1.0.2/services.js";
+  "https://developers.kakao.com/sdk/js/kakao.js http://dapi.kakao.com/v2/maps/sdk.js  http://t1.daumcdn.net/mapjsapi/js/main/4.4.12/kakao.js http://t1.daumcdn.net/mapjsapi/js/libs/services/1.0.2/services.js https://t1.kakaocdn.net/kakao_js_sdk/v1/kakao.js";
 
 const googleLoginSrc =
-  "https://accounts.google.com/gsi/client https://accounts.google.com/gsi/button";
+  "https://accounts.google.com/gsi/ https://accounts.google.com/gsi/client https://accounts.google.com/gsi/button";
 
 const ContentSecurityPolicy = `
   default-src 'self' ${googleLoginSrc};
@@ -12,7 +12,7 @@ const ContentSecurityPolicy = `
   style-src 'self' 'unsafe-inline' *;
   img-src * blob: data: ;
   media-src 'self';
-  connect-src 'self';
+  connect-src 'self' ${googleLoginSrc};
   font-src 'self';
   frame-src 'self' ${googleLoginSrc};
 `;
