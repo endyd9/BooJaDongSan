@@ -122,7 +122,7 @@ export default function Edit() {
         <input
           className="w-1/2 mx-14 bg-gray-100 hover:cursor-pointer hover:shadow-md hover:bg-gray-300 border"
           type="submit"
-          value="Join"
+          value="Save"
         />
       </form>
     </main>

@@ -31,7 +31,7 @@ export default function Detail({ params }: { params: { id: string } }) {
       alert("관심 매물을 등록하려면 로그인 해주세요.");
       router.push("/login");
     } else {
-      const data = axios.post(`/api/apt/${params.id}/like`);
+      axios.post(`/api/apt/${params.id}/like`);
       setIslike((prev) => !prev);
     }
   };
