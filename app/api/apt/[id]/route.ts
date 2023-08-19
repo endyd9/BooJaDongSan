@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { client } from "@/lib/server/client";
 import { verify } from "@/lib/server/jwtUtil";
 import axios from "axios";
+import { cookies } from "next/headers";
 
 export async function GET(
   req: Request,
@@ -11,7 +12,7 @@ export async function GET(
 
   const { id } = params;
 
-  const token: any = req.headers.get("cookie")?.replace("x-jwt=", "");
+  const token: any = cookies().get("x-jwt")?.value;
 
   try {
     const apt = await client.apt.update({

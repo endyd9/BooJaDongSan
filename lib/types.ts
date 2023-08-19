@@ -4,7 +4,7 @@ export interface FullData {
   dedicatedArea: number;
   floor: number;
   buildYear: number;
-  treadDate: number;
+  treadDate: string;
   treadAmount: number;
   cityCode: number;
   dong: string;

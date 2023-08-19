@@ -8,6 +8,8 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
   const keyword = searchParams.get("keyword");
+  console.log(searchParams, keyword);
+
   if (keyword === "")
     return res.json({
       ok: true,
@@ -64,6 +66,7 @@ export async function GET(req: Request) {
             dong: true,
           },
         };
+
         apts = await client.apt.findMany(query);
         count = await client.apt.count({
           where: query.where,
@@ -207,7 +210,9 @@ export async function GET(req: Request) {
       apts,
       totalPage: Math.ceil(count / 10),
     });
-  } catch {
+  } catch (error) {
+    console.log(error);
+
     return res.json({
       ok: false,
       error: "부동산 목록을 불러오지 못했습니다.\n 잠시 후 다시 시도해 주세요.",

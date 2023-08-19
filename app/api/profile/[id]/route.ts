@@ -13,6 +13,7 @@ export async function GET(
   if (token !== undefined) {
     userId = verify(token);
   }
+
   const page = new URL(req.url).searchParams.get("page");
 
   try {

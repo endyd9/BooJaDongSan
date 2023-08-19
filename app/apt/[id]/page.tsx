@@ -19,6 +19,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   const { data, isLoading } = useSWR<AptDetailResponse>(
     `/api/apt/${params.id}`
   );
+
   const { data: isLoggedin } = useSWR("/api/is-logged-in");
 
   const [isLike, setIslike] = useState(false);
