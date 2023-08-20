@@ -49,7 +49,7 @@ export async function GET(req: Request) {
       return res.json({
         ok: true,
         apts: apts
-          .toSorted((a, b) => a.rise - b.rise)
+          .sort((a, b) => a.rise - b.rise)
           .reverse()
           .slice(0, 10),
         isRise: true,
