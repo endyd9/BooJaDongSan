@@ -4,7 +4,7 @@ import List from "@/components/List";
 import ChangePage from "@/components/changePage";
 import { ListData } from "@/lib/types";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 
@@ -22,12 +22,12 @@ export default function Search() {
   const searchParams = useSearchParams();
 
   const [placeholde, setPlaceholder] = useState(
-    searchParams.get("category") || "전체조건"
+    searchParams.get("category") ?? "전체조건"
   );
   const [category, setCategory] = useState(
-    searchParams.get("category") || "전체"
+    searchParams.get("category") ?? "전체"
   );
-  const [keyword, setKeyword] = useState(searchParams.get("keyword") || "");
+  const [keyword, setKeyword] = useState(searchParams.get("keyword") ?? "");
   const [page, setPage] = useState(1);
 
   const { data, mutate, isLoading } = useSWR<SearchResponse>(
@@ -74,7 +74,7 @@ export default function Search() {
       <div
         id="smenus"
         onClick={onSubmenuClick}
-        className="grid grid-rows-2 grid-cols-3 w-[80%] h-24 ml-10 hover:cursor-pointer"
+        className="grid grid-rows-2 grid-cols-3 w-[80%] h-24 hover:cursor-pointer ml-10 xl:ml-14"
       >
         <div className="flex items-center justify-center  border-2 border-gray-200">
           아파트 명
@@ -105,7 +105,8 @@ export default function Search() {
           placeholder={`${placeholde}(으)로 검색하기`}
           {...register("keyword")}
         />
-        <button className="flex items-center justify-center absolute right-[1.5rem] hover:bg-gray-200 w-10 h-10 rounded-full">
+        {/* 검색아이콘 */}
+        <button className="flex items-center justify-center absolute right-[1.5rem] xl:right-[26.5rem] 2xl:right-[36.5rem] hover:bg-gray-200 w-10 h-10 rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

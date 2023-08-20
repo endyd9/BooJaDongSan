@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 interface PageProps {
   pages: number;
   currentPage: number;
@@ -16,27 +14,41 @@ export default function ChangePage(props: PageProps) {
     pages.push(i);
   }
   const onPageClick: any = (event: React.ChangeEvent<HTMLElement>) => {
-    props.pageTo(+event.target.innerText);
+    return props.pageTo(+event.target.innerText);
   };
   const onFristClick = () => {
-    return props.pageTo(1);
+    return groupFirst === props.currentPage
+      ? alert("첫 페이지입니다.")
+      : props.pageTo(1);
   };
 
   const onLastClick = () => {
-    props.pageTo(props.pages);
+    return currentLast === props.currentPage
+      ? alert("마지막 페이지입니다.")
+      : props.pageTo(props.pages);
   };
 
   const onNextClick = () => {
-    if (currentLast + 1 > props.pages) return alert("마지막 페이지입니다.");
-    props.pageTo(currentLast + 1);
+    if (currentLast + 1 > totalPage)
+      if (currentLast === props.currentPage) {
+        return alert("마지막 페이지입니다.");
+      } else {
+        return props.pageTo(currentLast);
+      }
+    return props.pageTo(currentLast + 1);
   };
 
   const onBeforeClick = () => {
-    if (groupFirst - 5 < 1) return alert("첫 페이지입니다.");
+    if (groupFirst - 5 < 1)
+      if (groupFirst === props.currentPage) {
+        return alert("첫 페이지입니다.");
+      } else {
+        return props.pageTo(groupFirst);
+      }
     return props.pageTo(groupFirst - 5);
   };
   return (
-    <ul className="flex justify-center">
+    <ul className="flex justify-center mb-8">
       <button onClick={onFristClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +81,7 @@ export default function ChangePage(props: PageProps) {
           />
         </svg>
       </button>
-      {pages.map((_, i) => (
+      {pages.map((i) => (
         <li key={i} className="mx-2">
           <button
             onClick={onPageClick}

@@ -8,7 +8,6 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
   const keyword = searchParams.get("keyword");
-  console.log(searchParams, keyword);
 
   if (keyword === "")
     return res.json({
