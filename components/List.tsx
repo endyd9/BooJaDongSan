@@ -33,7 +33,7 @@ export default function List(props: ListProps) {
                       <span>
                         {apt.min > 9999
                           ? apt.min > 99999
-                            ? `${apt.min.toString().slice(0, 2)} 억`
+                            ? `${apt.min.toString().slice(-0, -4)} 억`
                             : `${apt.min
                                 .toString()
                                 .slice(0, 2)
@@ -47,7 +47,7 @@ export default function List(props: ListProps) {
                       <span>
                         {apt.max > 9999
                           ? apt.max > 99999
-                            ? `${apt.max.toString().slice(0, 2)} 억`
+                            ? `${apt.max.toString().slice(-0, -4)} 억`
                             : `${apt.max
                                 .toString()
                                 .slice(0, 2)
@@ -77,7 +77,7 @@ export default function List(props: ListProps) {
                     <span>
                       {apt.treadAmount > 9999
                         ? apt.treadAmount > 99999
-                          ? `${apt.treadAmount.toString().slice(0, 2)} 억`
+                          ? `${apt.treadAmount.toString().slice(-0, -4)} 억`
                           : `${apt.treadAmount
                               .toString()
                               .slice(0, 2)
