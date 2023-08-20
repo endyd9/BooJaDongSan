@@ -15,9 +15,9 @@ export default function List(props: ListProps) {
     <div className="w-full px-1">
       <ul>
         {props.isRise === true
-          ? props.riseList?.map((apt, i) => (
+          ? props.riseList?.map((apt) => (
               <Link
-                key={i}
+                key={apt.id}
                 href={`/search?keyword=${apt.name}&category=아파트 명&page=1`}
               >
                 <li className="w-full mb-3 grid grid-flow-col grid-cols-2 items-center justify-between px-5 h-20 border-gray-500 border shadow-xl">
@@ -33,28 +33,22 @@ export default function List(props: ListProps) {
                       <span>
                         {apt.min > 9999
                           ? apt.min > 99999
-                            ? `${apt.min.toString().slice(0, 2)} 억`
+                            ? `${apt.min.toString().slice(-0, -4)} 억`
                             : `${apt.min
                                 .toString()
                                 .slice(0, 2)
-                                .replace(
-                                  /(\d)(?=(?:\d{1})+(?!\d))/g,
-                                  "$1."
-                                )} 억`
+                                .replace(/(\d)(?=(?:\d)+(?!\d))/g, "$1.")} 억`
                           : `${apt.min} 만`}
                       </span>
                       <span>최고가 :</span>
                       <span>
                         {apt.max > 9999
                           ? apt.max > 99999
-                            ? `${apt.max.toString().slice(0, 2)} 억`
+                            ? `${apt.max.toString().slice(-0, -4)} 억`
                             : `${apt.max
                                 .toString()
                                 .slice(0, 2)
-                                .replace(
-                                  /(\d)(?=(?:\d{1})+(?!\d))/g,
-                                  "$1."
-                                )} 억`
+                                .replace(/(\d)(?=(?:\d)+(?!\d))/g, "$1.")} 억`
                           : `${apt.max} 만`}
                       </span>
                     </div>
@@ -77,11 +71,11 @@ export default function List(props: ListProps) {
                     <span>
                       {apt.treadAmount > 9999
                         ? apt.treadAmount > 99999
-                          ? `${apt.treadAmount.toString().slice(0, 2)} 억`
+                          ? `${apt.treadAmount.toString().slice(-0, -4)} 억`
                           : `${apt.treadAmount
                               .toString()
                               .slice(0, 2)
-                              .replace(/(\d)(?=(?:\d{1})+(?!\d))/g, "$1.")} 억`
+                              .replace(/(\d)(?=(?:\d)+(?!\d))/g, "$1.")} 억`
                         : `${apt.treadAmount} 만`}
                     </span>
                   </div>

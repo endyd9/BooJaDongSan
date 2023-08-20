@@ -71,7 +71,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                 거래가격 :{" "}
                 {data.apt.treadAmount > 9999
                   ? data.apt.treadAmount > 99999
-                    ? `${data.apt.treadAmount.toString().slice(0, 2)} 억원`
+                    ? `${data.apt.treadAmount.toString().slice(-0, -4)} 억원`
                     : `${data.apt.treadAmount
                         .toString()
                         .slice(0, 2)

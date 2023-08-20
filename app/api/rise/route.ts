@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { client } from "@/lib/server/client";
 
 export interface AptRise {
+  id: number;
   name: string;
   dong: string;
   dedicatedArea: number;
@@ -29,8 +30,9 @@ export async function GET(req: Request) {
         },
       });
 
-      compareApts.forEach((apt) => {
+      compareApts.forEach((apt, i) => {
         apts.push({
+          id: i,
           name: apt.name,
           dong: apt.dong,
           dedicatedArea: apt.dedicatedArea,

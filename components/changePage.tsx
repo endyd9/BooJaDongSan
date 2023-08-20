@@ -10,6 +10,7 @@ export default function ChangePage(props: PageProps) {
   const pages: number[] = [];
   const currentLast = pageGroup * 5 > totalPage ? totalPage : pageGroup * 5;
   const groupFirst = currentLast >= 5 ? currentLast - 4 : 1;
+
   for (let i = groupFirst; i <= currentLast; i++) {
     pages.push(i);
   }
@@ -17,7 +18,7 @@ export default function ChangePage(props: PageProps) {
     return props.pageTo(+event.target.innerText);
   };
   const onFristClick = () => {
-    return groupFirst === props.currentPage
+    return groupFirst === props.currentPage && groupFirst === 1
       ? alert("첫 페이지입니다.")
       : props.pageTo(1);
   };
@@ -47,6 +48,7 @@ export default function ChangePage(props: PageProps) {
       }
     return props.pageTo(groupFirst - 5);
   };
+
   return (
     <ul className="flex justify-center mb-8">
       <button onClick={onFristClick}>
@@ -81,8 +83,8 @@ export default function ChangePage(props: PageProps) {
           />
         </svg>
       </button>
-      {pages.map((i) => (
-        <li key={i} className="mx-2">
+      {pages.map((_, i) => (
+        <li key={_} className="mx-1">
           <button
             onClick={onPageClick}
             className={props.currentPage === pages[i] ? "font-bold" : ""}
