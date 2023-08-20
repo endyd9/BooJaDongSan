@@ -4,7 +4,7 @@ import List from "@/components/List";
 import ChangePage from "@/components/changePage";
 import { ListData } from "@/lib/types";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 
@@ -22,12 +22,12 @@ export default function Search() {
   const searchParams = useSearchParams();
 
   const [placeholde, setPlaceholder] = useState(
-    searchParams.get("category") || "전체조건"
+    searchParams.get("category") ?? "전체조건"
   );
   const [category, setCategory] = useState(
-    searchParams.get("category") || "전체"
+    searchParams.get("category") ?? "전체"
   );
-  const [keyword, setKeyword] = useState(searchParams.get("keyword") || "");
+  const [keyword, setKeyword] = useState(searchParams.get("keyword") ?? "");
   const [page, setPage] = useState(1);
 
   const { data, mutate, isLoading } = useSWR<SearchResponse>(

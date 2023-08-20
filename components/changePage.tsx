@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 interface PageProps {
   pages: number;
   currentPage: number;
@@ -83,7 +81,7 @@ export default function ChangePage(props: PageProps) {
           />
         </svg>
       </button>
-      {pages.map((_, i) => (
+      {pages.map((i) => (
         <li key={i} className="mx-2">
           <button
             onClick={onPageClick}
