@@ -8,7 +8,7 @@ const googleLoginSrc =
 
 const ContentSecurityPolicy = `
   default-src 'self' ${googleLoginSrc};
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' ${kakaoMapSrc} ${googleLoginSrc};
+  script-src * 'self' 'unsafe-eval' 'unsafe-inline' ${kakaoMapSrc} ${googleLoginSrc};
   style-src 'self' 'unsafe-inline' *;
   img-src * blob: data: ;
   media-src 'self';
